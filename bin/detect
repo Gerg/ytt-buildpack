@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+echo 'Checking for $YTT_DATA and $YTT_OUTPUT environment variables...'
+
+if [ -z $YTT_DATA ] || [ -z $YTT_OUTPUT ]; then
+  echo "ytt buildpack environment variables not detected."
+  exit 1
+else
+  echo "Detected ytt environment variables."
+  exit 0
+fi

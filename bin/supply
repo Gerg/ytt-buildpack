@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+build_path=$1
+cache_path=$2
+
+echo "Checking for ytt..."
+ytt_path=$cache_path/ytt
+
+if [ -f "$ytt_path" ]; then
+    echo "Using cached ytt."
+else
+    echo "Installing ytt..."
+    wget https://github.com/vmware-tanzu/carvel-ytt/releases/download/v0.37.0/ytt-linux-amd64 -O $ytt_path
+    chmod +x $ytt_path
+fi
+
+echo "Rendering $YTT_OUTPUT..."
+
+pushd $build_path || exit
+    echo -e $YTT_DATA | $ytt_path -f . -f - > $YTT_OUTPUT
+popd || exit
